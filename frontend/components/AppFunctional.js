@@ -16,14 +16,20 @@ export default function AppFunctional(props) {
   function onSubmit(event) {
     event.preventDefault();
     let sonuc = {
-      location: location,
+      x: location[0],
+      y: location[1],
       steps: step,
       email: form,
     };
-
-    const newObj = JSON.stringify(sonuc);
-    const parsedObj = JSON.parse(newObj);
-    setMessage(newObj);
+    axios
+      .post("http://localhost:9000/api/result", sonuc)
+      .then((res) => {
+        console.log(res.data);
+        reset();
+      })
+      .catch(() => {
+        console.log("Unprocessable Entity");
+      });
   }
 
   /* form fonksiyonları*/
